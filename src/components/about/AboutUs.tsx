@@ -7,7 +7,7 @@ const AboutUs = async () => {
   const t = await getTranslations('aboutUs')
 
   return (
-    <div className='my-20 bg-white'>
+    <div className='py-20 bg-white'>
       <Container>
         <div className='flex flex-col lg:flex-row gap-10 lg:gap-[65px] items-center lg:items-start'>
 

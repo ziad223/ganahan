@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Container from '../shared/formcomponents/Container';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
 import { usePathname } from 'next/navigation';
 import { CiMenuFries } from 'react-icons/ci';
@@ -15,33 +15,46 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
   const [openServices, setOpenServices] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const pathname = usePathname();
-
+   const locale = useLocale()
   const toggleServices = () => setOpenServices(prev => !prev);
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+const isActive = (href: string) => {
+  // ✅ حالة الرئيسية فقط
+  if (href === `/${currentLocale}`) {
+    return pathname === `/${currentLocale}` || pathname === `/${currentLocale}/`;
+  }
+
+  // ✅ باقي الروابط
+  return pathname === href || pathname.startsWith(href + '/');
+};
   const isServicesActive = () => pathname.includes('/our-services');
 
-  const navLinks = [
-    { label: t('home'), href: `/${currentLocale}` },
-    { label: t('about'), href: `/${currentLocale}/about-us` },
-    { label: t('services'), href: `/${currentLocale}/our-services`, dropdown: [
-      { label: t('service1'), href: `/${currentLocale}/our-services/service-1` },
-      { label: t('service2'), href: `/${currentLocale}/our-services/service-2` },
-      { label: t('service3'), href: `/${currentLocale}/our-services/service-3` }
-    ]},
-    { label: t('blog'), href: `/${currentLocale}/blog` },
-    { label: t('team'), href: `/${currentLocale}/team` },
-    { label: t('partners'), href: `/${currentLocale}/partners` },
-    { label: t('contact'), href: `/${currentLocale}/contact-us` },
-  ];
+const navLinks = [
+  { label: t('home'), href: `/${currentLocale}` },
+  { label: t('about'), href: `/${currentLocale}/about-us` },
+  {
+    label: t('services'),
+    href: `/${currentLocale}/our-services`,
+    dropdown: [
+      { label: t('service1'), id: 'web-design' },
+      { label: t('service2'), id: 'mobile-apps' },
+      { label: t('service3'), id: 'marketing' }
+    ]
+  },
+  { label: t('blog'), href: `/${currentLocale}/blog` },
+  { label: t('team'), href: `/${currentLocale}/team` },
+  { label: t('partners'), href: `/${currentLocale}/partners` },
+  { label: t('contact'), href: `/${currentLocale}/contact-us` },
+];
+
 
   return (
-    <div>
+    <div className='bg-white'>
       <Container>
         {/* Navbar */}
         <div className='py-2 flex items-center justify-between w-full'>
           
-          {/* الشاشات الكبيرة */}
           <div className='hidden md:flex items-center gap-8 w-full'>
+            <Link href = '/'>
              <Image 
               src='/images/logo.svg' 
               alt='logo' 
@@ -49,10 +62,10 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
               height={83} 
               className='md:w-[183px] md:h-[83px] w-[140px] h-[50px]' 
             />
+            </Link>
            
            
 
-            {/* الروابط */}
             <ul className='flex items-center gap-6 ml-auto'>
               {navLinks.map(link => (
                 <li key={link.href} className='relative'>
@@ -60,8 +73,8 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
                     <>
                       <div className='flex items-center gap-1 cursor-pointer' onClick={toggleServices}>
                         <span className={clsx(
-                          'text-lg font-bold hover:text-[#343694]',
-                          isServicesActive() ? 'text-[#343694]' : 'text-[#1F2149]'
+                          ' font-bold hover:text-[#343694] ',
+                          isServicesActive() ? 'text-[#343694] ' : 'text-[#1F2149]'
                         )}>
                           {link.label}
                         </span>
@@ -80,12 +93,12 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
                       {openServices && (
                         <ul className='absolute top-full mt-3 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 min-w-[180px] z-50'>
                           {link.dropdown.map(sublink => (
-                            <li key={sublink.href}>
+                            <li key={sublink.id}>
                               <Link 
-                                href={sublink.href}
+                                href={`/${locale}/service/${sublink.id}`}
                                 className={clsx(
-                                  'hover:text-[#343694] font-medium',
-                                  isActive(sublink.href) ? 'text-[#343694]' : 'text-[#1F2149]'
+                                  'hover:text-[#343694] font-medium ',
+                                  isActive(sublink.id) ? 'text-[#343694]' : 'text-[#1F2149]'
                                 )}
                                 onClick={() => setOpenServices(false)}
                               >
@@ -100,7 +113,7 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
                     <Link 
                       href={link.href}
                       className={clsx(
-                        'text-lg font-bold hover:text-[#343694]',
+                        'text-sm xl:text-lg font-bold hover:text-[#343694]',
                         isActive(link.href) ? 'text-[#343694]' : 'text-[#1F2149]'
                       )}
                     >
@@ -156,15 +169,13 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
     {navLinks.map(link => (
       <li key={link.href} className='relative'>
 
-        {/* لو فيه dropdown */}
         {link.dropdown ? (
           <>
-            {/* الزر الرئيسي للخدمات */}
             <div
               className='flex justify-between items-center cursor-pointer'
               onClick={toggleServices}
             >
-              <span className='font-bold'>{link.label}</span>
+              <span className='font-bold text-sm xl:text-lg'>{link.label}</span>
 
               <Image
                 src='/images/chev-down.svg'
@@ -182,9 +193,9 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
             {openServices && (
               <ul className='flex flex-col ml-4 mt-2 gap-2'>
                 {link.dropdown.map(sublink => (
-                  <li key={sublink.href}>
+                  <li key={sublink.id}>
                     <Link
-                      href={sublink.href}
+                      href={sublink.id}
                       onClick={() => setOpenSidebar(false)}
                       className='hover:text-[#343694]'
                     >
@@ -199,7 +210,7 @@ const Navbar = ({ currentLocale }: { currentLocale: string }) => {
           <Link
             href={link.href}
             onClick={() => setOpenSidebar(false)}
-            className='hover:text-[#343694]'
+            className='hover:text-[#343694] '
           >
             {link.label}
           </Link>

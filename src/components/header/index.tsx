@@ -19,7 +19,7 @@ const Header: React.FC = () => {
       autoplay={{ delay: 4000, disableOnInteraction: false }}
       pagination={{ clickable: true }}
       loop={true}
-      className="w-full h-screen headerSwiper "
+      className="w-full h-screen headerSwiper  "
     >
       {images.map((img, index) => (
         <SwiperSlide key={index}>

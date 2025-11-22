@@ -11,14 +11,14 @@ const Footer = () => {
   const t = useTranslations('footer')
 
   return (
-    <div className="bg-white ">
+    <div className="bg-white pt-10 ">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[120px] gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[60px] xl:gap-[120px] gap-10">
           
           {/* العمود الأول */}
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="font-extrabold lg:text-[22px] text-lg">
+              <h2 className="font-extrabold lg:text-[20px] xl:text-[22px] text-lg">
                 {t('company')}
               </h2>
               <div className="flex items-center gap-1">
@@ -36,7 +36,7 @@ const Footer = () => {
           <div>
             <div>
                <div className="flex items-center gap-3">
-              <h2 className="font-extrabold lg:text-[22px] text-lg">
+              <h2 className="font-extrabold lg:text-[20px] xl:text-[22px] text-lg">
                 {t('sections')}
               </h2>
               <div className="flex items-center gap-1">
@@ -60,10 +60,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* العمود الثالث */}
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="font-extrabold lg:text-[22px] text-lg">
+              <h2 className="font-extrabold lg:text-[20px] xl:text-[22px] text-lg">
                 {t('contact')}
               </h2>
               <div className="flex items-center gap-1">

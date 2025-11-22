@@ -5,7 +5,7 @@ import TestimonailsMap from './TestimonailsMap'
 
 const Testimonails = () => {
   return (
-    <div className='my-20'>
+    <div className='py-20 bg-white my-5'>
       <Container >
         <div className='flex flex-col lg:flex-row lg:gap-12 gap-7'>
               <TestimonailsSlider/>

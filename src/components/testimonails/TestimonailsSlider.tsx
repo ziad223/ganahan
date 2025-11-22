@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 
 import 'swiper/css'
+import { useTranslations } from 'next-intl'
 
 const testimonials = [
   {
@@ -33,11 +34,12 @@ const testimonials = [
 
 const TestimonailsSlider = () => {
   const [current, setCurrent] = useState(0)
-
+  const t = useTranslations('testimonails')
   return (
     <div className='lg:w-1/2 w-full'>
-      <h2 className='font-extrabold lg:text-[23px] text-xl lg:mb-10 mb-5'>ماذا قالو عــــا !</h2>
-
+<h2 className='font-extrabold lg:text-[23px] text-xl lg:mb-10 mb-5'>
+      {t('testimonials_title')}
+    </h2>
       <Swiper
         modules={[Autoplay]}
         autoplay={{ delay: 2800, disableOnInteraction: false }}

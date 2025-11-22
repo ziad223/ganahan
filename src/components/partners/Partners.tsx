@@ -72,7 +72,7 @@ const Partners = async ({ locale }: { locale: string }) => {
   ]
   console.log(partners, "partnerssssss");
   return (
-      <div className="w-full py-10 bg-white my-20">
+      <div className="w-full py-10 my-3 bg-white ">
     <Container>
         <div className="text-center mb-10">
           <h2 className="text-2xl font-bold text-[#121212]">{t("title")}</h2>

@@ -12,7 +12,7 @@ body {
   overflow-x: hidden !important;
   max-width: 100% !important;
    font-family: 'Almarai', sans-serif !important ;
-   background-color: #fff !important;
+   background-color: #f5f5f5 !important;
 
 }
 .font-alm *{
@@ -67,6 +67,7 @@ html{
   margin: 0 !important;
   display: flex;
   align-items: center;
+  opacity: 1 !important;
   justify-content: center;
 }
 
